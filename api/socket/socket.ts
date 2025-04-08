@@ -5,16 +5,18 @@ import cors from "cors";
 
 const app = express();
 app.use(cors({
-	origin: "http://localhost:5173", // 👈 your Vite frontend
+	origin: ["http://localhost:5173", "https://your-frontend-url.com"],
+	methods: ["GET", "POST", "OPTIONS"],
 	credentials: true
   }));
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: ["http://localhost:5173"],
-		methods: ["GET", "POST"],
-	},
-});
+	  origin: ["http://localhost:5173", "https://your-frontend-url.com"],
+	  methods: ["GET", "POST"],
+	  credentials: true,
+	}
+  });
 
 export const getReceiverSocketId = (receiverId: string) => {
 	return userSocketMap[receiverId];
